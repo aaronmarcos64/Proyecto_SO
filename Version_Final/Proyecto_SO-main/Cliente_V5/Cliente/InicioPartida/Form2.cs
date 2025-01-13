@@ -242,6 +242,8 @@ namespace InicioPartida
                     label2.Visible = false;
                     cmBox_D1.Visible = false;
                     cmBox_D2.Visible = false;
+                    Dado_1.Text = "Dado 1: ";
+                    Dado_2.Text = "Dado 2: ";
                 }
                 NotificarTurnoAsync();
             }
@@ -257,14 +259,10 @@ namespace InicioPartida
         private void NotificarTurno()
         {
             string msg1;
-            msg1 = "12";
+            msg1 = "12/"+jugadores.Count;
             for (int x = 0; x < jugadores.Count; x++)
-            {
-                if (usuario != jugadores[x].ToString())
-                {
-                    msg1 = msg1 + "/" + jugadores[x].ToString();
-                }
-
+            {       
+                msg1 = msg1 + "/" + jugadores[x].ToString();
             }
             byte[] msg = System.Text.Encoding.ASCII.GetBytes(msg1);
             server.Send(msg);
@@ -469,14 +467,17 @@ namespace InicioPartida
         {
             turno++;
             if (turno > jugadores.Count) { turno = 1; }
-            tirardado.Visible = true;
-            seleccionarficha.Visible = true;
-            Dado_1.Visible = true;
-            Dado_2.Visible = true;
-            label1.Visible = true;
-            label2.Visible = true;
-            cmBox_D1.Visible = true;
-            cmBox_D2.Visible = true;
+            if (jugadores[turno - 1] == usuario)
+            {
+                tirardado.Visible = true;
+                seleccionarficha.Visible = true;
+                Dado_1.Visible = true;
+                Dado_2.Visible = true;
+                label1.Visible = true;
+                label2.Visible = true;
+                cmBox_D1.Visible = true;
+                cmBox_D2.Visible = true;
+            }
         }
     }
 }
