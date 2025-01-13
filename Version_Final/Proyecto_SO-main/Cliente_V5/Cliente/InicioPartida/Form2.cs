@@ -28,7 +28,7 @@ namespace InicioPartida
         int[] ficha_Verde = new int[4];
         int[] ficha_Azul = new int[4];
         int[] ficha_Amarilla = new int[4];
-        int[] score = new int[4];
+        int score = 0;
         string fichas;
         int partida, turno=1;
         public Form2(Socket sock, List<string> Conectados, string Usuario, Thread Atender, List<string> Jugadores, string Fichas, int Partida)
@@ -180,13 +180,19 @@ namespace InicioPartida
                         ficha_Verde[dado2 - 1] = ficha_Verde[dado2 - 1] + dado[1];
                         if (ficha_Verde[dado1 - 1] >= 72)
                         {
-                            score[i]++;
-                            if (score[1] == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
+                            score++;
+                            if (score == 4) 
+                            { 
+                                MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); 
+                            }
                         }
                         if (ficha_Verde[dado2 - 1] >= 72)
                         {
-                            score[i]++;
-                            if (score[1] == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
+                            score++;
+                            if (score == 4) 
+                            { 
+                                MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); 
+                            }
                         }
                     }
                     if (i == 1)
@@ -195,13 +201,13 @@ namespace InicioPartida
                         ficha_Roja[dado2 - 1] = ficha_Roja[dado2 - 1] + dado[1];
                         if (ficha_Roja[dado1 - 1] >= 72)
                         {
-                            score[i]++;
-                            if (score[1] == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
+                            score++;
+                            if (score == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
                         }
                         if (ficha_Roja[dado2 - 1] >= 72)
                         {
-                            score[i]++;
-                            if (score[1] == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
+                            score++;
+                            if (score == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
                         }
                     }
                     if (i == 2)
@@ -210,13 +216,13 @@ namespace InicioPartida
                         ficha_Azul[dado2 - 1] = ficha_Azul[dado2 - 1] + dado[1];
                         if (ficha_Azul[dado1 - 1] >= 72)
                         {
-                            score[i]++;
-                            if (score[1] == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
+                            score++;
+                            if (score == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
                         }
                         if (ficha_Azul[dado2 - 1] >= 72)
                         {
-                            score[i]++;
-                            if (score[1] == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
+                            score++;
+                            if (score == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
                         }
                     }
                     if (i == 3)
@@ -225,13 +231,13 @@ namespace InicioPartida
                         ficha_Amarilla[dado2 - 1] = ficha_Amarilla[dado2 - 1] + dado[1];
                         if (ficha_Amarilla[dado1 - 1] >= 72)
                         {
-                            score[i]++;
-                            if (score[1] == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
+                            score++;
+                            if (score == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
                         }
                         if (ficha_Amarilla[dado2 - 1] >= 72)
                         {
-                            score[i]++;
-                            if (score[1] == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
+                            score++;
+                            if (score == 4) { MessageBox.Show("¡Eljugador" + i + ":" + usuario + ". Ha ganado la partida!"); }
                         }
                     }
                     tirardado.Visible = false;
@@ -252,7 +258,7 @@ namespace InicioPartida
         {
             Actualizar_fichas(); // Primera función
 
-            await Task.Delay(1000); // Espera 1 segundo
+            await Task.Delay(500); // Espera 1 segundo
 
             NotificarTurno(); // Segunda función
         }
@@ -311,7 +317,8 @@ namespace InicioPartida
         private void inicio()
         {
             string iniciar;
-            iniciar = "10";
+            int a = jugadores.Count-1;
+            iniciar = "10/" + a;
             for (int i = 0; i < jugadores.Count; i++)
             {
                 if (usuario != jugadores[i].ToString())
@@ -322,6 +329,7 @@ namespace InicioPartida
             }
             byte[] msg = System.Text.Encoding.ASCII.GetBytes(iniciar);
             server.Send(msg);
+
             label_invitar.Visible = false;
             Invitar.Visible = false;
             comboBox1.Visible = false;

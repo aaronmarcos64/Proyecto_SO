@@ -451,43 +451,30 @@ void *AtenderCliente(void *socket)
 		
 		else if (codigo ==10)
 		{
-
-			char usuario_1[MAX_NOMBRE];
-			char usuario_2[MAX_NOMBRE];
-			char usuario_3[MAX_NOMBRE];
-	
-		
-			if (p != NULL && strcmp(p, "") == 0)
+			Jugadores_Lista player;
+			p = strtok(NULL, "/");
+			player.numero_clientes = atoi(p);
+			for (int x=0; x<player.numero_clientes; x++)
 			{
-				strcpy(usuario_1, p);
 				p = strtok(NULL, "/");
-			}
-			if (p != NULL && strcmp(p, "") == 0)
-			{
-				strcpy(usuario_2, p);
-				p = strtok(NULL, "/");
-			}
-			if (p != NULL && strcmp(p, "") == 0)
-			{
-				strcpy(usuario_3, p);
+				strcpy(player.cliente[x].Nombre, p);
 				
 			}
 			strcpy(respuesta, "10/");
-			if (Clis.numero_clientes > 0 && Clis.numero_clientes <= MAX_CLIENTES)
+			if (Clis.numero_clientes > 0)
 			{
 				for (int i = 0; i < Clis.numero_clientes; i++)
 				{
-					if (Clis.cliente[i].Nombre != NULL &&
-						(strcmp(usuario_1, Clis.cliente[i].Nombre) == 0 ||
-						 strcmp(usuario_2, Clis.cliente[i].Nombre) == 0 ||
-						 strcmp(usuario_3, Clis.cliente[i].Nombre) == 0))
+					for (int a=0; a<player.numero_clientes; a++)
 					{
-						write(Clis.cliente[i].sock, respuesta, strlen(respuesta));
+						if (strcmp(Clis.cliente[i].Nombre, player.cliente[a].Nombre)==0)
+						{
+							write(Clis.cliente[i].sock, respuesta, strlen(respuesta));
+							printf("%s\n",respuesta);
+						}
 					}
 				}
 			}
-		
-	
 		}
 		
 		else if (codigo == 11)//enviar fichas
